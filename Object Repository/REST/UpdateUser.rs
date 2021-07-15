@@ -36,13 +36,13 @@
    <socketTimeout>0</socketTimeout>
    <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
    <variables>
-      <defaultValue>'John'</defaultValue>
+      <defaultValue>GlobalVariable.USERNAME</defaultValue>
       <description></description>
       <id>3bb9c23b-eeae-4481-8b4f-b13762803058</id>
       <masked>false</masked>
       <name>username</name>
    </variables>
-   <verificationScript>import static org.assertj.core.api.Assertions.*
+   <verificationScript>import static org.assertj.core.api.Assertions
 
 import com.kms.katalon.core.testobject.RequestObject
 import com.kms.katalon.core.testobject.ResponseObject
@@ -54,6 +54,7 @@ import internal.GlobalVariable as GlobalVariable
 
 RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
 
-ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()
+</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>

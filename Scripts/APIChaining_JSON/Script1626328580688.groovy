@@ -14,14 +14,25 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
+
+import groovy.json.JsonSlurper
+import groovy.json.internal.Value as Value
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-WS.sendRequestAndVerify(findTestObject('SOAP/Calculator/CalculatorSoap/Add'))
+getUserResponse = WS.sendRequest(findTestObject('REST/GetUser'))
 
-WS.sendRequestAndVerify(findTestObject('REST/CreateUser'))
+def slurper = new JsonSlurper()
 
-WS.sendRequestAndVerify(findTestObject('SOAP/Calculator/CalculatorSoap/Subtract'))
+def result = slurper.parseText(getUserResponse.getResponseBodyContent())
 
-WS.sendRequestAndVerify(findTestObject('REST/GetUser'))
+def value = result.data[4].first_name
+
+println "  >>  Value extracted is : "+ value
+
+GlobalVariable.USERNAME = Value
+
+println "  >>  GlobalVariable.USERNAME : "+ GlobalVariable.USERNAME
+
+WS.sendRequest(findTestObject('REST/UpdateUser', [('username') : GlobalVariable.USERNAME]))
 

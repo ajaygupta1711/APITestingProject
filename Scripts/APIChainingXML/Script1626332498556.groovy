@@ -17,11 +17,15 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-WS.sendRequestAndVerify(findTestObject('SOAP/Calculator/CalculatorSoap/Add'))
+addResponse = WS.sendRequest(findTestObject('SOAP/Calculator/CalculatorSoap/Add'))
 
-WS.sendRequestAndVerify(findTestObject('REST/CreateUser'))
+def addResult = addResponse.responseBodyContent
 
-WS.sendRequestAndVerify(findTestObject('SOAP/Calculator/CalculatorSoap/Subtract'))
+def value = new XMLSlurper().parseText(addResult)
 
-WS.sendRequestAndVerify(findTestObject('REST/GetUser'))
+// def extractedValue = value."xpath" // this step is required in case of nested nodes in response
+
+println "  >>  Value is : "+value
+
+WS.sendRequest(findTestObject('SOAP/Calculator/CalculatorSoap/Multiply', [('num1') : value]))
 

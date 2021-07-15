@@ -6,7 +6,7 @@
    <elementGuidId>136f2d46-f60c-47de-b32b-0f23a911c849</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
-   <connectionTimeout>-1</connectionTimeout>
+   <connectionTimeout>0</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent></httpBodyContent>
@@ -26,7 +26,7 @@
       <value>text/xml; charset=utf-8</value>
    </httpHeaderProperties>
    <katalonVersion>8.0.5</katalonVersion>
-   <maxResponseSize>-1</maxResponseSize>
+   <maxResponseSize>0</maxResponseSize>
    <restRequestMethod></restRequestMethod>
    <restUrl></restUrl>
    <serviceType>SOAP</serviceType>
@@ -34,7 +34,7 @@
    &lt;soapenv:Header/>
    &lt;soapenv:Body>
       &lt;tem:Multiply>
-         &lt;tem:intA>3&lt;/tem:intA>
+         &lt;tem:intA>${num1}&lt;/tem:intA>
          &lt;tem:intB>3&lt;/tem:intB>
       &lt;/tem:Multiply>
    &lt;/soapenv:Body>
@@ -43,7 +43,32 @@
    <soapRequestMethod>SOAP</soapRequestMethod>
    <soapServiceEndpoint>http://www.dneonline.com/calculator.asmx</soapServiceEndpoint>
    <soapServiceFunction>Multiply</soapServiceFunction>
-   <socketTimeout>-1</socketTimeout>
+   <socketTimeout>0</socketTimeout>
    <useServiceInfoFromWsdl>false</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>'5'</defaultValue>
+      <description></description>
+      <id>59fd7ca9-1451-4372-ad9e-a0398a78a346</id>
+      <masked>false</masked>
+      <name>num1</name>
+   </variables>
+   <verificationScript>import static org.assertj.core.api.Assertions.*
+
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webservice.verification.WSResponseManager
+
+import groovy.json.JsonSlurper
+import internal.GlobalVariable as GlobalVariable
+
+RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
+
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()
+
+WS.verifyElementText(response, 'MultiplyResponse.MultiplyResult', '15')
+
+
+</verificationScript>
    <wsdlAddress>http://www.dneonline.com/calculator.asmx?WSDL</wsdlAddress>
 </WebServiceRequestEntity>
